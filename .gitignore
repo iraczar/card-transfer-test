@@ -1,0 +1,22 @@
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!/src/main//build/
+!/src/test//build/
+
+# IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!/src/main//out/
+!/src/test//out/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Allure
+.allure/
+allure-results/
