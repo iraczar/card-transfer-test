@@ -1,5 +1,6 @@
 package ru.netology.web.test;
 
+import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.web.page.DashboardPage;
@@ -27,6 +28,9 @@ class MoneyTransferTest {
 
     @BeforeEach
     void setup() {
+        // Настройка для headless режима (для CI)
+        Configuration.headless = true;
+
         // Открываем страницу приложения
         open("http://localhost:9999");
         // Логинимся
