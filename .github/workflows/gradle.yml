@@ -1,7 +1,6 @@
 name: Java CI with Gradle
 # Updated: 2026-02-07 force new run
 
-
 on:
   push:
     branches: [ main, master ]
@@ -28,6 +27,7 @@ jobs:
         run: |
           java -jar ./artifacts/app-ibank-build-for-testers.jar > app.log 2>&1 &
           echo $! > app.pid
+
       - name: Wait for SUT to start
         run: |
           echo "Waiting for application to start..."
@@ -40,10 +40,23 @@ jobs:
             sleep 2
           done
           echo "Application failed to start in time"
+          echo "=== Application logs ==="
           cat app.log
           exit 1
+
+      - name: Show application logs before tests
+        run: |
+          echo "=== Application logs before tests ==="
+          cat app.log || echo "No logs found"
+
       - name: Build with Gradle
         run: ./gradlew test --info
+
+      - name: Show application logs after tests
+        if: always()
+        run: |
+          echo "=== Application logs after tests ==="
+          cat app.log || echo "No logs found"
 
       - name: Stop SUT
         if: always()
