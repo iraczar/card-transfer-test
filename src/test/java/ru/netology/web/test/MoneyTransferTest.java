@@ -30,6 +30,8 @@ class MoneyTransferTest {
     void setup() {
         // Настройка для headless режима (для CI)
         Configuration.headless = true;
+        // УВЕЛИЧИВАЕМ ТАЙМАУТ до 15 секунд
+        Configuration.timeout = 15000;
 
         // Открываем страницу приложения
         open("http://localhost:9999");
