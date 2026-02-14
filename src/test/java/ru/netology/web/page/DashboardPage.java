@@ -4,23 +4,26 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.val;
 
+import java.time.Duration;
+
+import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-// Класс для главной страницы со списком карт
+// Класс для главной страницы (Личный кабинет)
 public class DashboardPage {
-    // Заголовок страницы (чтобы убедиться, что мы на нужной странице)
+    // Заголовок страницы
     private SelenideElement heading = $("[data-test-id=dashboard]");
-    // Все карточки карт на странице
+    // Список всех карт на странице
     private ElementsCollection cards = $$(".list__item div");
-    // Строка с кнопкой "Пополнить"
-    private String balanceStart = "баланс: ";
-    private String balanceFinish = " р.";
+    // Поле для ID кнопки пополнения (находится внутри элемента кнопки)
+    private final String balanceStart = "баланс: ";
+    private final String balanceFinish = " р.";
 
-    // Конструктор: проверяет, что страница загрузилась
     public DashboardPage() {
-        heading.shouldBe(visible);
+        // Ждём загрузки страницы (до 30 секунд)
+        heading.shouldBe(visible, Duration.ofSeconds(30));
     }
 
     // Метод для получения баланса карты по её номеру (последние 4 цифры)
