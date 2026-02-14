@@ -40,7 +40,6 @@ jobs:
             sleep 2
           done
           echo "Application failed to start in time"
-          echo "=== Application logs ==="
           cat app.log
           exit 1
 
@@ -51,6 +50,16 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew test --info
+
+      - name: Show HTML page source on failure
+        if: failure()
+        run: |
+          echo "=== HTML page sources ==="
+          find build/reports/tests -name "*.html" -type f | head -5 | while read file; do
+            echo "--- File: $file ---"
+            cat "$file" | head -100
+            echo ""
+          done
 
       - name: Show application logs after tests
         if: always()
